@@ -1,0 +1,16 @@
+{
+    "manifest_version":2,
+    "name":"azl wikiru+",
+    "version":"1.0.0",
+    "description":"adds things to jp azur lane wiki",
+
+    "permissions":["tabs","http://azurlane.wikiru.jp/*"],
+
+    "browser_action":{
+        "default_popup":"popup/popup.html"
+    },
+
+    "web_accessible_resources":[
+        "tablefilter.css"
+    ]
+}
