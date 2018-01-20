@@ -2,3 +2,27 @@ tr.selected td
 {
     background-color: red;
 }
+
+.trigger-table
+{
+    position: relative;
+    margin-top: 25px;
+}
+
+.filter-trigger
+{
+    position: absolute;
+    top: -20px;
+    left: 0;
+}
+
+.trigger-table.filter-active tbody>tr
+{
+    display: none;
+}
+
+.trigger-table.filter-active tbody>tr.selected
+{
+    display: table-row;
+    background-color: blue;
+}

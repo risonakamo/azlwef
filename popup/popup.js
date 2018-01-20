@@ -7,7 +7,7 @@ function main()
     buttons[0].addEventListener("click",(e)=>{
         e.preventDefault();
 
-        chrome.tabs.executeScript({file:"tablefilter.js"});
+        chrome.tabs.executeScript({file:"tablefilter2.js"});
     });
 
     buttons[1].addEventListener("click",(e)=>{
