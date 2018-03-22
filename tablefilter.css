@@ -11,6 +11,11 @@
     left: 0;
 }
 
+.col-button
+{
+    left: 133px;
+}
+
 /*-- select mode --*/
 .trigger-table tr
 {

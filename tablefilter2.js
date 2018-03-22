@@ -33,25 +33,21 @@ class tableController
         this.triggerButton.href="";
         this.triggerButton.innerHTML="activate filter mode";
 
+        this.colButton=document.createElement("a");
+        this.colButton.classList.add("filter-trigger");
+        this.colButton.classList.add("col-button");
+        this.colButton.href="";
+        this.colButton.innerHTML="colmode";
+
         this.stable.insertAdjacentElement("afterbegin",this.triggerButton);
+        this.stable.insertAdjacentElement("afterbegin",this.colButton);
 
         this.triggerButton.addEventListener("click",(e)=>{
             e.preventDefault();
 
             if (!this.filterMode)
             {
-                this.rows=this.stable.querySelectorAll("tbody>tr");
-
-                for (var x=0;x<this.rows.length;x++)
-                {
-                    this.rows[x].addEventListener("click",(e)=>{
-                        if (this.filterMode==1)
-                        {
-                            e.currentTarget.classList.toggle("selected");
-                        }
-                    });
-                }
-
+                this.hookRows();
                 this.selectMode();
             }
 
@@ -63,6 +59,15 @@ class tableController
             else
             {
                 this.selectMode();
+            }
+        });
+
+        this.colButton.addEventListener("click",(e)=>{
+            e.preventDefault();
+
+            if (!this.cells)
+            {
+                this.hookCells();
             }
         });
     }
@@ -79,6 +84,48 @@ class tableController
         this.filterMode=2;
         this.triggerButton.innerHTML="reselect filter";
         this.stable.classList.add("filter-active");
+    }
+
+    hookRows()
+    {
+        if (this.rows)
+        {
+            return;
+        }
+
+        this.rows=this.stable.querySelectorAll("tbody>tr");
+
+        for (var x=0;x<this.rows.length;x++)
+        {
+            this.rows[x].addEventListener("click",(e)=>{
+                if (this.filterMode==1)
+                {
+                    e.currentTarget.classList.toggle("selected");
+                }
+            });
+        }
+    }
+
+    hookCells()
+    {
+        if (!this.rows)
+        {
+            this.hookRows();
+        }
+
+        this.cells=this.stable.querySelectorAll("td");
+
+        for (var x=0,l=this.cells.length;x<l;x++)
+        {
+            this.cells[x].addEventListener("click",(e)=>{
+                var cellpos=[...e.currentTarget.parentElement.children].indexOf(e.currentTarget);
+
+                for (var y=0;y<this.rows.length;y++)
+                {
+                    console.log(this.rows[y].children[cellpos].innerHTML);
+                }
+            });
+        }
     }
 }
 
