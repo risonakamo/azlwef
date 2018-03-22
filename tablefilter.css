@@ -48,3 +48,19 @@ tr.selected td
 {
     background-color: #d8f3ff;
 }
+
+/*-- col select --*/
+.trigger-table tbody tr td.col-selected
+{
+    background-color: #dab2ed;
+}
+
+.trigger-table tbody tr.selected td.col-selected
+{
+    background-color: #ff8a9f;
+}
+
+.trigger-table.filter-active tbody tr td.col-selected
+{
+    background-color: #e0afff;
+}

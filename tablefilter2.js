@@ -164,6 +164,7 @@ class tableController
         {
             splitDmg=cols[0][x].innerText.split("x");
             cols[1][x].innerText=splitDmg[0]*splitDmg[1];
+            cols[1][x].classList.add("col-selected");
         }
     }
 }
