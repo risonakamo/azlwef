@@ -22,6 +22,7 @@ class tableController
         this.stable.classList.add("trigger-table");
 
         this.filterMode=0;
+        this.colMode=0;
 
         this.attachTrigger();
     }
@@ -69,6 +70,8 @@ class tableController
             {
                 this.hookCells();
             }
+
+            this.colMode=0;
         });
     }
 
@@ -118,12 +121,35 @@ class tableController
         for (var x=0,l=this.cells.length;x<l;x++)
         {
             this.cells[x].addEventListener("click",(e)=>{
-                var cellpos=[...e.currentTarget.parentElement.children].indexOf(e.currentTarget);
-
-                for (var y=0;y<this.rows.length;y++)
+                if (this.colMode==0)
                 {
-                    console.log(this.rows[y].children[cellpos].innerHTML);
+                    var cellpos=[...e.currentTarget.parentElement.children].indexOf(e.currentTarget);
+
+                    this.selectedCol1=[];
+                    for (var y=0;y<this.rows.length;y++)
+                    {
+                        this.selectedCol1.push(this.rows[y].children[cellpos]);
+                    }
+
+                    this.colMode=1;
                 }
+
+                else if (this.colMode==1)
+                {
+                    var cellpos=[...e.currentTarget.parentElement.children].indexOf(e.currentTarget);
+
+                    this.selectedCol2=[];
+                    for (var y=0;y<this.rows.length;y++)
+                    {
+                        this.selectedCol2.push(this.rows[y].children[cellpos]);
+                    }
+
+                    this.colMode=-1;
+
+                    console.log(this.selectedCol1);
+                    console.log(this.selectedCol2);
+                }
+
             });
         }
     }

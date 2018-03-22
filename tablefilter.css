@@ -27,10 +27,10 @@ tr.selected td
     background-color: #ffbf52;
 }
 
-.trigger-table tr:hover
+/* .trigger-table tr:hover
 {
     background-color:
-}
+} */
 
 /*-- filter active --*/
 .trigger-table.filter-active tbody>tr
