@@ -4,8 +4,8 @@ class tableFilter
     {
         document.head.insertAdjacentHTML("beforeend",`<link rel="stylesheet" href="${chrome.runtime.getURL("tablefilter.css")}">`);
 
-        var allTables=document.querySelectorAll(".style_table");
-        var newTb;
+        // var allTables=document.querySelectorAll(".style_table");
+        var allTables=document.querySelectorAll("table.wikitable.sortable.jquery-tablesorter");
 
         for (var x=0;x<allTables.length;x++)
         {
