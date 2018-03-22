@@ -22,7 +22,6 @@ class tableController
         this.stable.classList.add("trigger-table");
 
         this.filterMode=0;
-        this.colMode=0;
 
         this.attachTrigger();
     }
@@ -71,7 +70,7 @@ class tableController
                 this.hookCells();
             }
 
-            this.colMode=0;
+            this.beginColSelect(2);
         });
     }
 
@@ -121,36 +120,50 @@ class tableController
         for (var x=0,l=this.cells.length;x<l;x++)
         {
             this.cells[x].addEventListener("click",(e)=>{
-                if (this.colMode==0)
+                if (this.colsToSelect>0)
                 {
-                    var cellpos=[...e.currentTarget.parentElement.children].indexOf(e.currentTarget);
+                    this.selectCol(e);
+                    this.colsToSelect--;
 
-                    this.selectedCol1=[];
-                    for (var y=0;y<this.rows.length;y++)
+                    if (this.colsToSelect==0)
                     {
-                        this.selectedCol1.push(this.rows[y].children[cellpos]);
+                        this.calculateBurst(this.selectedCols);
                     }
-
-                    this.colMode=1;
                 }
-
-                else if (this.colMode==1)
-                {
-                    var cellpos=[...e.currentTarget.parentElement.children].indexOf(e.currentTarget);
-
-                    this.selectedCol2=[];
-                    for (var y=0;y<this.rows.length;y++)
-                    {
-                        this.selectedCol2.push(this.rows[y].children[cellpos]);
-                    }
-
-                    this.colMode=-1;
-
-                    console.log(this.selectedCol1);
-                    console.log(this.selectedCol2);
-                }
-
             });
+        }
+    }
+
+    //enter number of columns to be selectable
+    beginColSelect(number)
+    {
+        this.selectedCols=[];
+        this.colsToSelect=number;
+    }
+
+    //given a clicked cell event, select the column of that cell, puts into selectedCols
+    selectCol(e)
+    {
+        var cellpos=[...e.currentTarget.parentElement.children].indexOf(e.currentTarget);
+
+        var selectedCol=[];
+        for (var y=0;y<this.rows.length;y++)
+        {
+            selectedCol.push(this.rows[y].children[cellpos]);
+        }
+
+        this.selectedCols.push(selectedCol);
+    }
+
+    //requires [dmg,output] cols selected
+    //cols should be [[dmgcol],[outputcol]]
+    calculateBurst(cols)
+    {
+        var splitDmg;
+        for (var x=0,l=cols[0].length;x<l;x++)
+        {
+            splitDmg=cols[0][x].innerText.split("x");
+            cols[1][x].innerText=splitDmg[0]*splitDmg[1];
         }
     }
 }

@@ -12,13 +12,9 @@ class tableController
       1: select mode (allow for clicking)
       2: active (showing selected stuff)*/
     int filterMode;
-    /*-1: col mode not active
-       0: waiting for selection of first col
-       1: waiting for selection of 2nd col*/
-    int colMode;
 
-    element-array selectedCol1;
-    element-array selectedCol2;
+    int colsToSelect;
+    element-array-array selectedCols; //array of arrays of elements
 
     element triggerButton;
     element colButton;
@@ -32,4 +28,7 @@ class tableController
 
     void hookRows();
     void hookCells();
+
+    void beginColSelect(int number);
+    void selectCol(event e);
 }
