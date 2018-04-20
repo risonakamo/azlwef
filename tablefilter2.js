@@ -33,14 +33,23 @@ class tableController
         this.triggerButton.href="";
         this.triggerButton.innerHTML="activate filter mode";
 
-        this.colButton=document.createElement("a");
-        this.colButton.classList.add("filter-trigger");
-        this.colButton.classList.add("col-button");
-        this.colButton.href="";
-        this.colButton.innerHTML="colmode";
+        var burstButton=document.createElement("a");
+        burstButton.classList.add("filter-trigger");
+        burstButton.classList.add("col-button");
+        burstButton.href="";
+        burstButton.innerHTML="calculate burst";
+        burstButton.title="click on damage column (which contains an X) and then click the output column";
+
+        var dpsButton=document.createElement("a");
+        dpsButton.classList.add("filter-trigger");
+        dpsButton.classList.add("col-button");
+        dpsButton.href="";
+        dpsButton.innerHTML="calculate dps";
+        dpsButton.title="click on the burst damage column, then click on the reload time column, then click on an output column";
 
         this.stable.insertAdjacentElement("afterbegin",this.triggerButton);
-        this.stable.insertAdjacentElement("afterbegin",this.colButton);
+        this.stable.insertAdjacentElement("afterbegin",burstButton);
+        this.stable.insertAdjacentElement("afterbegin",dpsButton);
 
         this.triggerButton.addEventListener("click",(e)=>{
             e.preventDefault();
@@ -62,7 +71,7 @@ class tableController
             }
         });
 
-        this.colButton.addEventListener("click",(e)=>{
+        burstButton.addEventListener("click",(e)=>{
             e.preventDefault();
 
             if (!this.cells)
@@ -70,7 +79,20 @@ class tableController
                 this.hookCells();
             }
 
+            this.currentCalcFunction=this.calculateBurst;
             this.beginColSelect(2);
+        });
+
+        dpsButton.addEventListener("click",(e)=>{
+            e.preventDefault();
+
+            if (!this.cells)
+            {
+                this.hookCells();
+            }
+
+            this.currentCalcFunction=this.calculateDps;
+            this.beginColSelect(3);
         });
     }
 
@@ -127,7 +149,7 @@ class tableController
 
                     if (this.colsToSelect==0)
                     {
-                        this.calculateBurst(this.selectedCols);
+                        this.currentCalcFunction(this.selectedCols);
                     }
                 }
             });
@@ -165,6 +187,17 @@ class tableController
             splitDmg=cols[0][x].innerText.split("x");
             cols[1][x].innerText=splitDmg[0]*splitDmg[1];
             cols[1][x].classList.add("col-selected");
+        }
+    }
+
+    //select burst column, reload column, then output column
+    //[0:(burst) damage,1:reload,2:output]
+    calculateDps(cols)
+    {
+        for (var x=0,l=cols[0].length;x<l;x++)
+        {
+            cols[2][x].innerText=cols[0][x]/cols[1][x];
+            cols[2][x].classList.add("col-selected");
         }
     }
 }
