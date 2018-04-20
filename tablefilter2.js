@@ -28,29 +28,13 @@ class tableController
 
     attachTrigger()
     {
-        this.triggerButton=document.createElement("a");
-        this.triggerButton.classList.add("filter-trigger");
-        this.triggerButton.href="";
-        this.triggerButton.innerHTML="activate filter mode";
+        var controls=document.createElement("div");
+        controls.classList.add("filter-trigger");
+        controls.innerHTML=`<a href="">activate filter mode</a><a href="" title="click on damage column (which contains an X) and then click the output column">calculate burst</a><a href="" title="click on the burst damage column, then click on the reload time column, then click on an output column">calculate dps</a>`;
 
-        var burstButton=document.createElement("a");
-        burstButton.classList.add("filter-trigger");
-        burstButton.classList.add("col-button");
-        burstButton.href="";
-        burstButton.innerHTML="calculate burst";
-        burstButton.title="click on damage column (which contains an X) and then click the output column";
+        this.stable.insertAdjacentElement("afterbegin",controls);
 
-        var dpsButton=document.createElement("a");
-        dpsButton.classList.add("filter-trigger");
-        dpsButton.classList.add("col-button");
-        dpsButton.href="";
-        dpsButton.innerHTML="calculate dps";
-        dpsButton.style.left="300px";
-        dpsButton.title="click on the burst damage column, then click on the reload time column, then click on an output column";
-
-        this.stable.insertAdjacentElement("afterbegin",this.triggerButton);
-        this.stable.insertAdjacentElement("afterbegin",burstButton);
-        this.stable.insertAdjacentElement("afterbegin",dpsButton);
+        this.triggerButton=controls.children[0];
 
         this.triggerButton.addEventListener("click",(e)=>{
             e.preventDefault();
@@ -72,7 +56,7 @@ class tableController
             }
         });
 
-        burstButton.addEventListener("click",(e)=>{
+        controls.children[1].addEventListener("click",(e)=>{
             e.preventDefault();
 
             if (!this.cells)
@@ -84,7 +68,7 @@ class tableController
             this.beginColSelect(2);
         });
 
-        dpsButton.addEventListener("click",(e)=>{
+        controls.children[2].addEventListener("click",(e)=>{
             e.preventDefault();
 
             if (!this.cells)

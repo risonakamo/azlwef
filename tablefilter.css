@@ -11,9 +11,9 @@
     left: 0;
 }
 
-.col-button
+.filter-trigger a
 {
-    left: 133px;
+    margin: 5px;
 }
 
 /*-- select mode --*/
