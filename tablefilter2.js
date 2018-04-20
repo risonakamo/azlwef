@@ -45,6 +45,7 @@ class tableController
         dpsButton.classList.add("col-button");
         dpsButton.href="";
         dpsButton.innerHTML="calculate dps";
+        dpsButton.style.left="300px";
         dpsButton.title="click on the burst damage column, then click on the reload time column, then click on an output column";
 
         this.stable.insertAdjacentElement("afterbegin",this.triggerButton);
@@ -196,7 +197,7 @@ class tableController
     {
         for (var x=0,l=cols[0].length;x<l;x++)
         {
-            cols[2][x].innerText=cols[0][x]/cols[1][x];
+            cols[2][x].innerText=(cols[0][x].innerText/parseFloat(cols[1][x].innerText)).toFixed(3);
             cols[2][x].classList.add("col-selected");
         }
     }
